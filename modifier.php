@@ -1,12 +1,14 @@
 <?php include('environnement.php') ?>
 <?php
 
-// Mise à jour de la base de donnée
 $id = $_GET['id'];
-$req = $bdd->prepare("SELECT * FROM fiche_film WHERE id = :id");
+$req = $bdd->prepare("SELECT * 
+                    FROM fiche_film 
+                    WHERE id = :id");
 $req->execute(['id' => $id]);
 $data = $req->fetch();
 
+// Mise à jour de la base de donnée
 if (isset($_POST['submit'])) {
     $update = $bdd->prepare("UPDATE fiche_film SET
                             titre = :titre,
@@ -17,7 +19,7 @@ if (isset($_POST['submit'])) {
                             WHERE id = :id");
  
     $update->execute(array(
-        'id' => $_GET['id'],
+        'id' => $id,
         'titre' => $_POST['titre'],
         'realisateur' => $_POST['realisateur'],
         'duree' => $_POST['duree'],
