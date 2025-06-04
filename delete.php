@@ -1,30 +1,25 @@
-<?php include('environnement.php') ?>
-<body>     
-<!-- AFFICHAGE -->
-    <h2>FICHE FILM</h2>
-    <?php
-        $idFilm = htmlspecialchars($_GET['id']);
-        $request = $bdd->prepare("SELECT *
-                                FROM fiche_film 
-                                WHERE id = :id ");
-        $request->execute(['id' => $idFilm]);
-        $data = $request->fetch();
-        echo $data['titre'] . " <br> " . $data['realisateur'] . " <br>  " . $data['genre'] . " <br>  " . $data['duree'] . "min " . "<br>" .$data['synopsis'] . "<br>" . "<br>";
-    ?>
+<?php
+include('environnement.php');
 
-    <!-- Suppression -->
-    <?php
-    $id = $_GET['id'];
+$id = (int) $_GET['id'];
+$userId = $_SESSION['userid'];
 
-    //DELETE
-        $delete = $bdd->prepare("DELETE FROM fiche_film
-                                WHERE id = :id");
+// Vérifie si le film appartient à l'utilisateur
+$req = $bdd->prepare("SELECT * 
+                    FROM fiche_film 
+                    WHERE id = :id 
+                    AND user_id = :user_id");
+$req->execute(['id' => $id, 'user_id' => $userId]);
+$data = $req->fetch();
 
-        $delete->execute(array(
-        'id' => $id,
-        ));
+if (!$data) {
+    echo("Suppression non autorisée.");
+}
 
+// Supprime le film
+$delete = $bdd->prepare("DELETE FROM fiche_film 
+                        WHERE id = :id 
+                        AND user_id = :user_id");
+$delete->execute(['id' => $id, 'user_id' => $userId]);
 
-        header("Location: film.php");
-    ?>
-</body>
+?>

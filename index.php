@@ -1,9 +1,12 @@
 <?php include('environnement.php') ?>
 <?php 
     //Select film
-    $request = $bdd->query('SELECT titre, realisateur, genre, duree, id FROM fiche_film ORDER BY id DESC LIMIT 3');
+    $request = $bdd->query('SELECT titre, realisateur, genre, duree, id 
+                            FROM fiche_film 
+                            ORDER BY id 
+                            DESC LIMIT 3');
     while($data = $request->fetch()) {
-        echo $data['titre'] . " - " . $data['realisateur'] . " - " . $data['genre'] . " - " . $data['duree'] . "min " . '<a target="_blank" class="btn" href="synopsis.php?id=' .$data['id'] . '">Voir plus</a>'."<br>". "<br>";
+        echo $data['titre'] . " - " . $data['realisateur'] . " - " . $data['genre'] . " - " . $data['duree'] . "min " . '<a class="btn" href="synopsis.php?id=' .$data['id'] . '">Voir plus</a>'."<br>". "<br>";
     }
 
 ?>

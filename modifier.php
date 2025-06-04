@@ -1,12 +1,22 @@
 <?php include('environnement.php') ?>
 <?php
+if (!isset($_SESSION['userid'])) {
+    echo("Accès refusé. Veuillez vous connecter.");
+}
 
 $id = $_GET['id'];
+$userId = $_SESSION['userid'];
+
 $req = $bdd->prepare("SELECT * 
-                    FROM fiche_film 
-                    WHERE id = :id");
-$req->execute(['id' => $id]);
+                    FROM fiche_film
+                    WHERE id = :id 
+                    AND user_id = :user_id");
+$req->execute(['id' => $id, 'user_id' => $userId]);
 $data = $req->fetch();
+
+if (!$data) {
+    echo("Vous n'avez pas le droit de modifier cette fiche.");
+}
 
 // Mise à jour de la base de donnée
 if (isset($_POST['submit'])) {

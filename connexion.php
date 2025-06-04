@@ -5,7 +5,7 @@
         $entryPrenom = htmlspecialchars($_POST['prenom']);
         $entryPassword = htmlspecialchars($_POST['mdp']);
 
-        $request = $bdd->prepare("SELECT nom, prenom, mdp 
+        $request = $bdd->prepare("SELECT id, nom, prenom, mdp 
                                 FROM user 
                                 WHERE nom = :nom
                                 AND prenom = :prenom"); //Pas besoin de mettre 2 champs (email ou pseudo en général)
@@ -17,6 +17,7 @@
 
         if(password_verify($entryPassword,$data['mdp'])){
             $_SESSION['user'] = [$data['prenom'], $data['nom']];
+            $_SESSION['userid'] = $data['id'];
             header('location:index.php');
         }else{
             echo '<p class="error">Entrées incorrectes<p>';
