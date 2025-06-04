@@ -2,7 +2,6 @@
 <?php
 
 if (!isset($_SESSION['userid'])) {
-    // Redirection ou message d'erreur
     exit('Vous devez être connecté pour ajouter un film.');
 }
 $userId = $_SESSION['userid'];
