@@ -3,7 +3,7 @@
 <body>
     <h2>FICHE FILM</h2>
     <?php
-        $idFilm = htmlspecialchars($_GET['id']);
+        $idFilm = ($_GET['id']);
         $request = $bdd->prepare("SELECT fiche_film.*, user.nom, user.prenom 
                                   FROM fiche_film 
                                   JOIN user ON fiche_film.user_id = user.id

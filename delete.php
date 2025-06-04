@@ -1,10 +1,10 @@
 <?php
 include('environnement.php');
 
-$id = htmlspecialchars($_GET['id']);
+$id = (int) $_GET['id'];
 $userId = $_SESSION['userid'];
 
-//Verif user
+// Vérifie si le film appartient à l'utilisateur
 $req = $bdd->prepare("SELECT * 
                     FROM fiche_film 
                     WHERE id = :id 

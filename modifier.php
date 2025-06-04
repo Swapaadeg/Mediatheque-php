@@ -18,7 +18,7 @@ if (!$data) {
     echo("Vous n'avez pas le droit de modifier cette fiche.");
 }
 
-// Mise à jour de la base de donnée
+// Maj BDD
 if (isset($_POST['submit'])) {
     $update = $bdd->prepare("UPDATE fiche_film SET
                             titre = :titre,
